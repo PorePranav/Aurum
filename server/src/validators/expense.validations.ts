@@ -1,5 +1,5 @@
 import z from 'zod';
-import { PaymentMethod } from '../generated/prisma';
+import { PaymentMethod } from '../../prisma';
 
 export const createExpenseSchema = z.object({
   date: z.coerce.date(),

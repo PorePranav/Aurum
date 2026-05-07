@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
 
-import prisma from '../utils/prisma';
+import { prisma } from '../utils/prisma';
 import catchAsync from '../utils/catchAsync';
 import AppError from '../utils/AppError';
 import { createSendToken } from '../utils/authUtils';

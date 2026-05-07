@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100..700&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  /* SURFACES */
+  --color-base: #0f172a;
+  --color-surface: #111827;
+  --color-elevated: #1e293b;
+
+  /* TEXT */
+  --color-primary: #f8fafc;
+  --color-muted: #94a3b8;
+
+  /* ACCENT */
+  --color-accent: #c8a44d;
+
+  /* BORDERS */
+  --color-border: #334155;
+
+  /* FEEDBACK */
+  --color-success: #22c55e;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+
+  /* TYPOGRAPHY */
+  --font-sans: 'Josefin Sans', sans-serif;
+}

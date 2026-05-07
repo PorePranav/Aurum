@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction, CookieOptions } from 'express';
 
-import { User } from '../generated/prisma';
+import { User } from '../../prisma';
 import { CustomJwtPayload } from '../types/customTypes';
 import catchAsync from './catchAsync';
 import AppError from './AppError';
@@ -33,7 +33,7 @@ export const createSendToken = (
     secure: isProduction,
     sameSite: isProduction ? 'strict' : 'lax',
     path: '/',
-    domain: isProduction ? process.env.FRONTEND_URL : undefined,
+    // domain: isProduction ? process.env.FRONTEND_URL : undefined,
   };
 
   const {
