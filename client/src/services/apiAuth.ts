@@ -16,7 +16,7 @@ export async function logout() {
 }
 
 export async function fetchUser() {
-  const { data } = await api.get('/auth/me');
+  const { data } = await api.get('/auth/me', { withCredentials: true });
 
   return data.data;
 }

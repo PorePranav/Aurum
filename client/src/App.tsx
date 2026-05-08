@@ -7,7 +7,7 @@ import GlobalStyles from './styles/GlobalStyles';
 import Header from './ui/Header';
 import Login from './features/authentication/Login';
 import ProtectedRoute from './ui/ProtectedRoute';
-import Expenses from './features/expenses/Expenses';
+import Expenses from './pages/Expenses';
 
 const queryClient = new QueryClient({
   defaultOptions: {

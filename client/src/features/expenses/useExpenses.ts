@@ -5,11 +5,11 @@ import type { ApiError, Expense } from '../../types/types';
 
 export function useExpenses() {
   const {
-    data: expenses,
+    data: expenses = [],
     isPending,
     error,
-  } = useQuery<Expense, ApiError>({
-    queryKey: ['user'],
+  } = useQuery<Expense[], ApiError>({
+    queryKey: ['expenses'],
     queryFn: fetchExpensesApi,
   });
 

@@ -1,6 +1,21 @@
+export type Category = {
+  id: string;
+  name: string;
+  icon: string | null;
+  color: string | null;
+};
+
 export type LoginPayload = {
   email: string;
   password: string;
+};
+
+export type CreateExpensePayload = {
+  date: string;
+  item: string;
+  amount: number;
+  paymentMethod: PaymentMethod;
+  categoryId: string;
 };
 
 export type User = {
@@ -8,13 +23,6 @@ export type User = {
   email: string;
   name: string;
 };
-
-export type Category = {
-  id: string;
-  name: string;
-};
-
-export type PaymentMethod = 'UPI' | 'CASH' | 'CARD' | 'BANK_TRANSFER';
 
 export type Expense = {
   id: string;
@@ -30,3 +38,6 @@ export type Expense = {
 export type ApiError = {
   message: string;
 };
+
+export const paymentMethods = ['CASH', 'UPI', 'CARD', 'NETBANKING'] as const;
+export type PaymentMethod = (typeof paymentMethods)[number];
