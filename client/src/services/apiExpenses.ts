@@ -13,6 +13,8 @@ export async function createExpense({
   amount,
   paymentMethod,
   categoryId,
+  paidTo,
+  description,
 }: CreateExpensePayload) {
   const { data } = await api.post(
     '/expenses',
@@ -22,6 +24,8 @@ export async function createExpense({
       amount,
       paymentMethod,
       categoryId,
+      paidTo,
+      description,
     },
     { withCredentials: true },
   );

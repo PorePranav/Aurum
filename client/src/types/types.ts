@@ -16,6 +16,8 @@ export type CreateExpensePayload = {
   amount: number;
   paymentMethod: PaymentMethod;
   categoryId: string;
+  paidTo: string;
+  description: string | undefined;
 };
 
 export type User = {
@@ -32,6 +34,8 @@ export type Expense = {
   paymentMethod: PaymentMethod;
   categoryId: string;
   userId: string;
+  paidTo: string;
+  description: string | undefined;
   category: Category;
 };
 

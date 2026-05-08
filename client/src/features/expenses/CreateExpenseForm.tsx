@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import DatePicker from 'react-datepicker';
 import '../../styles/datepicker.css';
 
@@ -18,28 +18,39 @@ const inputClass = `
 
 const labelClass = 'text-sm font-medium text-muted';
 
+const textareaClass = `
+  min-h-[120px]
+  resize-none
+`;
+
 const CreateExpenseForm = ({ onCloseModal }: CreateExpenseFormProps) => {
   const { categories = [], isPending } = useCategories();
   const { createExpense, isCreating } = useCreateExpense();
 
   const [formData, setFormData] = useState<CreateExpensePayload>({
     item: '',
+    paidTo: '',
+    description: '',
     amount: 0,
     paymentMethod: 'UPI',
     categoryId: '',
     date: '',
   });
 
-  function handleChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+  function handleChange(
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+  ) {
     const { id, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
       [id]: id === 'amount' ? parseFloat(value) || 0 : value,
     }));
   }
 
-  function handleSubmit(e: ChangeEvent<HTMLFormElement>) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     createExpense(formData, {
       onSuccess: onCloseModal,
     });
@@ -49,32 +60,64 @@ const CreateExpenseForm = ({ onCloseModal }: CreateExpenseFormProps) => {
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Header */}
       <div>
-        <h2 className="text-3xl font-semibold tracking-wide text-primary">
+        <h2
+          className="
+            text-3xl
+            font-semibold
+            tracking-wide
+            text-primary
+          "
+        >
           Add Expense
         </h2>
+
+        <p className="mt-2 text-sm text-muted">
+          Track your spending effortlessly.
+        </p>
       </div>
 
       {/* Fields */}
       <div className="grid gap-5 md:grid-cols-2">
+        {/* Expense Name */}
         <div className="space-y-2">
           <label htmlFor="item" className={labelClass}>
             Expense Name
           </label>
+
           <input
             id="item"
             type="text"
             required
             value={formData.item}
             onChange={handleChange}
-            placeholder="Dinner at cafe"
+            placeholder="Pav Bhaji"
             className={inputClass}
           />
         </div>
 
+        {/* Paid To */}
+        <div className="space-y-2">
+          <label htmlFor="paidTo" className={labelClass}>
+            Paid To
+          </label>
+
+          <input
+            id="paidTo"
+            type="text"
+            required
+            value={formData.paidTo}
+            onChange={handleChange}
+            placeholder="UP Wala"
+            className={inputClass}
+          />
+        </div>
+
+        {/* Amount */}
         <div className="space-y-2">
           <label htmlFor="amount" className={labelClass}>
             Amount
           </label>
+
           <input
             id="amount"
             type="number"
@@ -86,10 +129,12 @@ const CreateExpenseForm = ({ onCloseModal }: CreateExpenseFormProps) => {
           />
         </div>
 
+        {/* Category */}
         <div className="space-y-2">
           <label htmlFor="categoryId" className={labelClass}>
             Category
           </label>
+
           <select
             id="categoryId"
             required
@@ -101,6 +146,7 @@ const CreateExpenseForm = ({ onCloseModal }: CreateExpenseFormProps) => {
             <option value="">
               {isPending ? 'Loading categories...' : 'Select category'}
             </option>
+
             {categories.map(({ id, name }) => (
               <option key={id} value={id}>
                 {name}
@@ -109,10 +155,12 @@ const CreateExpenseForm = ({ onCloseModal }: CreateExpenseFormProps) => {
           </select>
         </div>
 
+        {/* Payment Method */}
         <div className="space-y-2">
           <label htmlFor="paymentMethod" className={labelClass}>
             Payment Method
           </label>
+
           <select
             id="paymentMethod"
             required
@@ -128,10 +176,12 @@ const CreateExpenseForm = ({ onCloseModal }: CreateExpenseFormProps) => {
           </select>
         </div>
 
-        <div className="space-y-2 md:col-span-2">
+        {/* Date */}
+        <div className="space-y-2">
           <label htmlFor="date" className={labelClass}>
             Date
           </label>
+
           <DatePicker
             id="date"
             selected={formData.date ? new Date(formData.date) : null}
@@ -149,7 +199,24 @@ const CreateExpenseForm = ({ onCloseModal }: CreateExpenseFormProps) => {
             calendarClassName="aurum-datepicker"
             formatWeekDay={(day) => day.substring(0, 2)}
             popperPlacement="bottom-start"
-            popperProps={{ strategy: 'fixed' }}
+            popperProps={{
+              strategy: 'fixed',
+            }}
+          />
+        </div>
+
+        {/* Description */}
+        <div className="space-y-2 md:col-span-2">
+          <label htmlFor="description" className={labelClass}>
+            Description
+          </label>
+
+          <textarea
+            id="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Lunch after work..."
+            className={`${inputClass} ${textareaClass}`}
           />
         </div>
       </div>
@@ -160,9 +227,17 @@ const CreateExpenseForm = ({ onCloseModal }: CreateExpenseFormProps) => {
           type="button"
           onClick={onCloseModal}
           className="
-            rounded-2xl border border-border bg-elevated px-5 py-3
-            font-medium text-muted transition-all
-            hover:border-accent/40 hover:text-primary
+            rounded-2xl
+            border
+            border-border
+            bg-elevated
+            px-5
+            py-3
+            font-medium
+            text-muted
+            transition-all
+            hover:border-accent/40
+            hover:text-primary
           "
         >
           Cancel
@@ -172,8 +247,15 @@ const CreateExpenseForm = ({ onCloseModal }: CreateExpenseFormProps) => {
           type="submit"
           disabled={isCreating}
           className="
-            rounded-2xl bg-accent px-6 py-3 text-base
-            font-semibold transition-all hover:opacity-90 disabled:opacity-70
+            rounded-2xl
+            bg-accent
+            px-6
+            py-3
+            text-base
+            font-semibold
+            transition-all
+            hover:opacity-90
+            disabled:opacity-70
           "
         >
           {isCreating ? 'Creating...' : 'Add Expense'}
