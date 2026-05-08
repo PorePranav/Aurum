@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction, CookieOptions } from 'express';
 
-import { User } from '../../prisma';
+import { User } from '../../prisma/generated';
 import { CustomJwtPayload } from '../types/customTypes';
 import catchAsync from './catchAsync';
 import AppError from './AppError';
