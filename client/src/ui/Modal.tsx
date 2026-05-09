@@ -1,4 +1,4 @@
-import React, {
+import {
   cloneElement,
   createContext,
   useContext,
@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { HiXMark } from 'react-icons/hi2';
+
 import useOutsideClick from '../hooks/useOutsideClick';
 
 type ModalContextType = {

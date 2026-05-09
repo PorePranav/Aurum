@@ -1,5 +1,5 @@
-import type { CreateExpensePayload } from '../types/types';
 import api from './api';
+import type { CreateExpensePayload } from '../types/types';
 
 export async function fetchExpenses() {
   const { data } = await api.get('/expenses', { withCredentials: true });

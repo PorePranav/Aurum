@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
 import { getMe, loginUser, signupUser } from '../controllers/auth.controller';
+import { protectRoute } from '../utils/authUtils';
 import { validateRequest } from '../utils/utilFunctions';
 import { loginSchema, signupSchema } from '../validators/auth.validations';
-import { protectRoute } from '../utils/authUtils';
 
 const router = Router();
 

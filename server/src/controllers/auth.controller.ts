@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
+import { NextFunction, Request, Response } from 'express';
 
-import { prisma } from '../utils/prisma';
-import catchAsync from '../utils/catchAsync';
 import AppError from '../utils/AppError';
 import { createSendToken } from '../utils/authUtils';
+import catchAsync from '../utils/catchAsync';
+import { prisma } from '../utils/prisma';
 
 export const signupUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -16,12 +16,16 @@ export const signupUser = catchAsync(
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const newUser = await prisma.user.create({
-      data: { name, email, password: hashedPassword },
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+      },
     });
 
-    const { password: newUserPassword, ...data } = newUser;
+    const { password: _password, ...sanitizedUser } = newUser;
 
-    createSendToken(newUser, 201, res);
+    createSendToken(sanitizedUser, 201, res);
   },
 );
 
@@ -40,33 +44,33 @@ export const loginUser = catchAsync(
     if (!user || !doesPasswordMatch)
       return next(new AppError('Invalid credentials', 401));
 
-    createSendToken(user, 200, res);
+    const { password: _password, ...sanitizedUser } = user;
+
+    createSendToken(sanitizedUser, 200, res);
   },
 );
 
-export const getMe = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const fetchedUser = await prisma.user.findUnique({
-      where: { id: req.user!.id },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-      },
-    });
+export const getMe = catchAsync(async (req: Request, res: Response) => {
+  const fetchedUser = await prisma.user.findUnique({
+    where: { id: req.user!.id },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+    },
+  });
 
-    res.status(200).json({
-      status: 'success',
-      data: fetchedUser,
-    });
-  },
-);
+  res.status(200).json({
+    status: 'success',
+    data: fetchedUser,
+  });
+});
 
 export const forgotUserPassword = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { email } = req.body;
+  async (req: Request, res: Response) => {
+    const { email: _email } = req.body;
 
-    /*TODO: Complete the implementation for forgot password*/
+    /* TODO: Complete forgot password implementation */
 
     res.status(200).json({
       status: 'success',
@@ -79,7 +83,7 @@ export const resetUserPassword = catchAsync(
     if (!req.query.token)
       return next(new AppError('Token is required to reset password', 401));
 
-    /*TODO: Complete the implementation for reset password*/
+    /* TODO: Complete reset password implementation */
 
     res.status(200).json({
       status: 'success',
@@ -88,20 +92,23 @@ export const resetUserPassword = catchAsync(
 );
 
 export const updateUserPassword = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { currentPassword, newPassword, confirmNewPassword } = req.body;
+  async (req: Request, res: Response) => {
+    const {
+      currentPassword: _currentPassword,
+      newPassword: _newPassword,
+      confirmNewPassword: _confirmNewPassword,
+    } = req.body;
 
-    /*TODO: Complete implementation for update password */
+    /* TODO: Complete update password implementation */
+
     res.status(200).json({
       status: 'success',
     });
   },
 );
 
-export const logout = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    res.clearCookie('jwt').status(204).json({
-      status: 'success',
-    });
-  },
-);
+export const logout = catchAsync(async (_req: Request, res: Response) => {
+  res.clearCookie('jwt').status(204).json({
+    status: 'success',
+  });
+});

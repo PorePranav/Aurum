@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+
 import { login as loginApi } from '../../services/apiAuth';
 import type { ApiError, LoginPayload, User } from '../../types/types';
 

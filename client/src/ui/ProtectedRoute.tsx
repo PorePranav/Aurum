@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { useUser } from '../features/authentication/useUser';
 import Spinner from './Spinner';
+import { useUser } from '../features/authentication/useUser';
 
 type Props = {
   children?: ReactNode;

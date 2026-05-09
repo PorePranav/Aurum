@@ -1,8 +1,8 @@
-import { ZodTypeAny, ZodError } from 'zod';
 import { Request, Response, NextFunction } from 'express';
+import { ZodTypeAny, ZodError } from 'zod';
 
-import catchAsync from './catchAsync';
 import AppError from './AppError';
+import catchAsync from './catchAsync';
 
 type Schema = {
   body?: ZodTypeAny;

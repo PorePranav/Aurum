@@ -1,6 +1,6 @@
+import CreateExpenseForm from './CreateExpenseForm';
 import Modal from '../../ui/Modal';
 
-import CreateExpenseForm from './CreateExpenseForm';
 
 export default function CreateExpense() {
   return (

@@ -1,10 +1,9 @@
+import { useUser } from '../features/authentication/useUser';
+import CreateExpense from '../features/expenses/CreateExpense';
+import { useExpenses } from '../features/expenses/useExpenses';
 import PageLayout from '../styles/PageLayout';
 import SpinnerMini from '../ui/SpinnerMini';
 
-import { useUser } from '../features/authentication/useUser';
-import { useExpenses } from '../features/expenses/useExpenses';
-
-import CreateExpense from '../features/expenses/CreateExpense';
 
 function formatDate(date: string) {
   return new Intl.DateTimeFormat('en-IN', {

@@ -3,11 +3,11 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import Login from './features/authentication/Login';
+import Expenses from './pages/Expenses';
 import GlobalStyles from './styles/GlobalStyles';
 import Header from './ui/Header';
-import Login from './features/authentication/Login';
 import ProtectedRoute from './ui/ProtectedRoute';
-import Expenses from './pages/Expenses';
 
 const queryClient = new QueryClient({
   defaultOptions: {

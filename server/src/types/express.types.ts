@@ -1,9 +1,15 @@
 import { CustomJwtPayload } from './customTypes';
 
 declare global {
-  namespace Express {
-    interface Request {
-      user?: CustomJwtPayload;
-    }
+  interface ExpressRequest {
+    user?: CustomJwtPayload;
   }
 }
+
+declare module 'express-serve-static-core' {
+  interface Request {
+    user?: CustomJwtPayload;
+  }
+}
+
+export {};

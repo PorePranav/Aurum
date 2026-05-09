@@ -1,12 +1,11 @@
-import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction, CookieOptions } from 'express';
+import jwt from 'jsonwebtoken';
 
-import { User } from '../../prisma/generated';
-import { CustomJwtPayload } from '../types/customTypes';
-import catchAsync from './catchAsync';
 import AppError from './AppError';
+import catchAsync from './catchAsync';
+import { CustomJwtPayload, SafeUser } from '../types/customTypes';
 
-const signToken = (user: User) => {
+const signToken = (user: SafeUser) => {
   const { id } = user;
 
   const payload: CustomJwtPayload = { id };
@@ -17,7 +16,7 @@ const signToken = (user: User) => {
 };
 
 export const createSendToken = (
-  user: User,
+  user: SafeUser,
   statusCode: number,
   res: Response,
 ) => {
@@ -33,14 +32,12 @@ export const createSendToken = (
     secure: isProduction,
     sameSite: isProduction ? 'strict' : 'lax',
     path: '/',
-    // domain: isProduction ? process.env.FRONTEND_URL : undefined,
   };
 
   const {
-    password,
-    passwordResetToken,
-    passwordChangedAt,
-    passwordResetTokenExpiresAt,
+    passwordResetToken: _passwordResetToken,
+    passwordChangedAt: _passwordChangedAt,
+    passwordResetTokenExpiresAt: _passwordResetTokenExpiresAt,
     ...userData
   } = user;
 

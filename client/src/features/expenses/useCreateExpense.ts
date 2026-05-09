@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
 import type { AxiosError } from 'axios';
+import { toast } from 'react-hot-toast';
 
 import { createExpense as createExpenseApi } from '../../services/apiExpenses';
 import type {

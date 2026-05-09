@@ -1,14 +1,13 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
-import cookieParser from 'cookie-parser';
 
 import globalErrorHandler from './controllers/error.controller';
-import AppError from './utils/AppError';
-
 import authRouter from './routers/auth.routes';
-import expenseRouter from './routers/expenses.routes';
 import categoryRouter from './routers/categories.routes';
+import expenseRouter from './routers/expenses.routes';
+import AppError from './utils/AppError';
 
 const app = express();
 

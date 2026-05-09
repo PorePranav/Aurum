@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+
 import { useUser } from '../features/authentication/useUser';
 
 const renderGuestLinks = () => (

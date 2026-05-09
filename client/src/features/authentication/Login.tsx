@@ -1,17 +1,15 @@
 import { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 
+import { useLogin } from "./useLogin";
+import { useUser } from "./useUser";
 import PageLayout from '../../styles/PageLayout';
 import Logo from '../../ui/Logo';
 import PasswordInput from '../../ui/PasswordInput';
 
-import { useLogin } from './useLogin';
-import { useUser } from './useUser';
 
 export default function Login() {
   const { user } = useUser();
-
-  if (user) return <Navigate to="/expenses" replace />;
 
   const [formData, setFormData] = useState({
     email: '',
@@ -19,6 +17,8 @@ export default function Login() {
   });
 
   const { login, isPending } = useLogin();
+  
+  if (user) return <Navigate to="/expenses" replace />;
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

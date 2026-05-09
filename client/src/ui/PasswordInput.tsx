@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import type { ChangeEvent } from 'react';
-
 import { HiEye, HiEyeSlash } from 'react-icons/hi2';
 
 type Props = {

@@ -1,11 +1,10 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 
-import { prisma } from '../utils/prisma';
 import catchAsync from '../utils/catchAsync';
-import AppError from '../utils/AppError';
+import { prisma } from '../utils/prisma';
 
 export const getAllExpenses = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const expenses = await prisma.expense.findMany({
       where: { userId: req.user!.id },
       include: { category: { select: { id: true, name: true } } },
@@ -19,15 +18,13 @@ export const getAllExpenses = catchAsync(
   },
 );
 
-export const createExpense = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const newExpense = await prisma.expense.create({
-      data: { ...req.body, userId: req.user!.id },
-    });
+export const createExpense = catchAsync(async (req: Request, res: Response) => {
+  const newExpense = await prisma.expense.create({
+    data: { ...req.body, userId: req.user!.id },
+  });
 
-    res.status(200).json({
-      status: 'success',
-      data: newExpense,
-    });
-  },
-);
+  res.status(200).json({
+    status: 'success',
+    data: newExpense,
+  });
+});

@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import { protectRoute } from '../utils/authUtils';
+
 import {
   createCategory,
   getAllCategories,
 } from '../controllers/categories.controller';
+import { protectRoute } from '../utils/authUtils';
 import { validateRequest } from '../utils/utilFunctions';
 import { createCategorySchema } from '../validators/category.validations';
 
